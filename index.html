@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bums 2 - Elite Clash Royale Clan</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Russo+One&family=Orbitron:wght@400;700;900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-yellow: #FFD700;
+            --bright-yellow: #FFEA00;
+            --dark-yellow: #FFA500;
+            --black: #000000;
+            --white: #FFFFFF;
+            --shadow-glow: 0 0 20px rgba(255, 215, 0, 0.8);
+        }
+
+        body {
+            font-family: 'Orbitron', monospace;
+            background: #000;
+            color: var(--white);
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* Animated Gradient Background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, 
+                #FFD700, #FFEA00, #FFA500, #FFD700);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            opacity: 0.2;
+            z-index: -1;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Particles */
+        .particles {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: var(--primary-yellow);
+            box-shadow: var(--shadow-glow);
+            border-radius: 50%;
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Tournament Banner */
+        .tournament-banner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(90deg, var(--primary-yellow), var(--bright-yellow), var(--primary-yellow));
+            background-size: 200% 100%;
+            animation: bannerGradient 3s linear infinite;
+            padding: 15px;
+            text-align: center;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(255, 215, 0, 0.6);
+            border-bottom: 3px solid var(--black);
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .tournament-banner:hover {
+            transform: translateY(2px);
+        }
+
+        @keyframes bannerGradient {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
+        .banner-text {
+            font-family: 'Black Ops One', cursive;
+            font-size: 24px;
+            color: var(--black);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            animation: textPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes textPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Main Container */
+        .main-container {
+            margin-top: 80px;
+            min-height: calc(100vh - 80px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            animation: heroEntry 1s ease-out;
+        }
+
+        @keyframes heroEntry {
+            0% {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo-container {
+            margin-bottom: 30px;
+            animation: logoFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .clan-logo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 5px solid var(--primary-yellow);
+            box-shadow: var(--shadow-glow);
+            object-fit: contain;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .clan-title {
+            font-family: 'Black Ops One', cursive;
+            font-size: 72px;
+            text-transform: uppercase;
+            letter-spacing: 8px;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, var(--primary-yellow), var(--bright-yellow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            transform: scaleX(1.3);
+        }
+
+        .clan-description {
+            font-size: 20px;
+            margin-bottom: 15px;
+            opacity: 0.9;
+            letter-spacing: 1px;
+        }
+
+        .clan-tag {
+            display: inline-block;
+            background: var(--primary-yellow);
+            color: var(--black);
+            padding: 10px 25px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 18px;
+            margin-bottom: 50px;
+            box-shadow: var(--shadow-glow);
+            animation: tagPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes tagPulse {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+            }
+            50% {
+                box-shadow: 0 0 40px rgba(255, 215, 0, 1);
+            }
+        }
+
+        /* Action Cards */
+        .action-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .action-card {
+            background: rgba(0, 0, 0, 0.8);
+            border: 3px solid var(--primary-yellow);
+            border-radius: 20px;
+            padding: 40px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-glow);
+        }
+
+        .action-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, var(--primary-yellow), transparent, var(--primary-yellow));
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s;
+            border-radius: 20px;
+        }
+
+        .action-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(255, 215, 0, 0.5);
+        }
+
+        .action-card:hover::before {
+            opacity: 1;
+            animation: borderRotate 2s linear infinite;
+        }
+
+        @keyframes borderRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .card-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+            animation: iconBounce 2s ease-in-out infinite;
+        }
+
+        @keyframes iconBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .card-title {
+            font-family: 'Russo One', sans-serif;
+            font-size: 28px;
+            margin-bottom: 15px;
+            color: var(--primary-yellow);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .card-description {
+            font-size: 16px;
+            opacity: 0.8;
+            line-height: 1.5;
+        }
+
+        /* Modal Overlay */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .modal-content {
+            max-width: 800px;
+            margin: 100px auto 50px;
+            background: rgba(0, 0, 0, 0.95);
+            border: 3px solid var(--primary-yellow);
+            border-radius: 20px;
+            padding: 40px;
+            position: relative;
+            animation: modalEntry 0.5s ease-out;
+            box-shadow: 0 0 50px rgba(255, 215, 0, 0.5);
+        }
+
+        @keyframes modalEntry {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 40px;
+            color: var(--primary-yellow);
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .close-btn:hover {
+            transform: rotate(90deg);
+        }
+
+        .modal-title {
+            font-family: 'Black Ops One', cursive;
+            font-size: 48px;
+            color: var(--primary-yellow);
+            text-align: center;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+        }
+
+        /* Info Sections */
+        .info-section {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease-out forwards;
+            animation-delay: 0.3s;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .info-box {
+            background: rgba(255, 215, 0, 0.1);
+            border: 2px solid var(--primary-yellow);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .info-box:hover {
+            background: rgba(255, 215, 0, 0.2);
+            transform: scale(1.05);
+        }
+
+        .info-label {
+            font-family: 'Russo One', sans-serif;
+            font-size: 14px;
+            color: var(--primary-yellow);
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .info-value {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        /* Discord Link */
+        .discord-cta {
+            text-align: center;
+            margin: 40px 0;
+            animation: fadeInUp 0.8s ease-out forwards;
+            animation-delay: 0.5s;
+            opacity: 0;
+        }
+
+        .discord-btn {
+            display: inline-block;
+            background: var(--primary-yellow);
+            color: var(--black);
+            padding: 15px 40px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 20px;
+            transition: all 0.3s;
+            box-shadow: var(--shadow-glow);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .discord-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(255, 215, 0, 0.8);
+            background: var(--bright-yellow);
+        }
+
+        /* Member List */
+        .member-list {
+            max-height: 400px;
+            overflow-y: auto;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(255, 215, 0, 0.05);
+            border-radius: 10px;
+            border: 2px solid var(--primary-yellow);
+        }
+
+        .member-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            margin: 5px 0;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        .member-item:hover {
+            background: rgba(255, 215, 0, 0.1);
+            transform: translateX(10px);
+        }
+
+        .member-rank {
+            font-weight: 700;
+            color: var(--primary-yellow);
+            width: 40px;
+        }
+
+        .member-name {
+            flex: 1;
+            padding: 0 10px;
+        }
+
+        .member-trophies {
+            color: var(--primary-yellow);
+            font-weight: 700;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .tournament-banner {
+                padding: 10px;
+            }
+
+            .banner-text {
+                font-size: 16px;
+            }
+
+            .clan-title {
+                font-size: 48px;
+                letter-spacing: 4px;
+                transform: scaleX(1.1);
+            }
+
+            .action-cards {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .modal-content {
+                margin: 80px auto 20px;
+                padding: 20px;
+            }
+
+            .modal-title {
+                font-size: 32px;
+            }
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-yellow);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--bright-yellow);
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg"></div>
+    <div class="particles" id="particles"></div>
+
+    <!-- Tournament Banner -->
+    <div class="tournament-banner" onclick="openModal('tournament')">
+        <div class="banner-text">
+            🏆 JOIN THE TOURNAMENT NOW! NEXT TOURNEY ON JUNE 7TH 🏆
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <div class="hero">
+            <div class="logo-container">
+                <img src="img/logo.png" alt="Bums 2 Logo" class="clan-logo">
+            </div>
+            
+            <h1 class="clan-title">BUMS 2</h1>
+            <p class="clan-description">Competitive Clash Royale clan based in the USA</p>
+            <div class="clan-tag">#Q2PQ8UVP</div>
+
+            <div class="action-cards">
+                <div class="action-card" onclick="openModal('info')">
+                    <div class="card-icon">📊</div>
+                    <h2 class="card-title">Clan Info</h2>
+                    <p class="card-description">View our stats, members, and requirements</p>
+                </div>
+
+                <div class="action-card" onclick="openModal('tournament')">
+                    <div class="card-icon">🏆</div>
+                    <h2 class="card-title">Bums 2 Tournament</h2>
+                    <p class="card-description">$20 prize pool • Members only • Free entry</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Clan Info Modal -->
+    <div class="modal" id="infoModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('info')">&times;</span>
+            <h2 class="modal-title">Clan Information</h2>
+            
+            <div class="info-section">
+                <div class="info-grid">
+                    <div class="info-box">
+                        <div class="info-label">Total Members</div>
+                        <div class="info-value">48</div>
+                    </div>
+                    <div class="info-box">
+                        <div class="info-label">Average Trophies</div>
+                        <div class="info-value">8,500</div>
+                    </div>
+                    <div class="info-box">
+                        <div class="info-label">Required Trophies</div>
+                        <div class="info-value">7,000+</div>
+                    </div>
+                    <div class="info-box">
+                        <div class="info-label">Location</div>
+                        <div class="info-value">USA</div>
+                    </div>
+                </div>
+
+                <h3 style="margin: 30px 0 20px; color: var(--primary-yellow);">Top Members</h3>
+                <div class="member-list" id="memberList">
+                    <!-- Members will be loaded here -->
+                </div>
+            </div>
+
+            <div class="discord-cta">
+                <a href="https://dsc.gg/bums2" target="_blank" class="discord-btn">Join Our Discord</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tournament Modal -->
+    <div class="modal" id="tournamentModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('tournament')">&times;</span>
+            <h2 class="modal-title">Bums 2 Tournament</h2>
+            
+            <div class="info-section">
+                <div class="info-grid">
+                    <div class="info-box">
+                        <div class="info-label">Prize Pool</div>
+                        <div class="info-value">$20</div>
+                    </div>
+                    <div class="info-box">
+                        <div class="info-label">Next Tournament</div>
+                        <div class="info-value">June 7th</div>
+                    </div>
+                    <div class="info-box">
+                        <div class="info-label">Entry Fee</div>
+                        <div class="info-value">FREE</div>
+                    </div>
+                    <div class="info-box">
+                        <div class="info-label">Schedule</div>
+                        <div class="info-value">Bi-Weekly</div>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin: 40px 0;">
+                    <h3 style="color: var(--primary-yellow); margin-bottom: 20px; font-size: 28px;">
+                        🎮 How to Join 🎮
+                    </h3>
+                    <p style="font-size: 18px; line-height: 1.8; opacity: 0.9;">
+                        Tournament registration and all information<br>
+                        is available on our Discord server.<br><br>
+                        <strong>Members only • Free entry • Cash prizes</strong>
+                    </p>
+                </div>
+            </div>
+
+            <div class="discord-cta">
+                <a href="https://dsc.gg/bums2" target="_blank" class="discord-btn">Join Discord to Register</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Member data (top 20)
+        const topMembers = [
+            {rank: 1, name: "jn3 2.0", trophies: 9000},
+            {rank: 2, name: "willy", trophies: 9000},
+            {rank: 3, name: "Reo", trophies: 9000},
+            {rank: 4, name: "<>< Ryan ><>", trophies: 8561},
+            {rank: 5, name: "xXMLGGAMERXx", trophies: 9000},
+            {rank: 6, name: "DDawn1", trophies: 9000},
+            {rank: 7, name: "fire boss", trophies: 9000},
+            {rank: 8, name: "Grom", trophies: 9000},
+            {rank: 9, name: "Jumin", trophies: 9000},
+            {rank: 10, name: "Mvp Mj", trophies: 9000},
+            {rank: 11, name: "Breezy", trophies: 9000},
+            {rank: 12, name: "Amiraclez", trophies: 9000},
+            {rank: 13, name: "Polar Buddy", trophies: 9000},
+            {rank: 14, name: "lordtop 1ggg", trophies: 9000},
+            {rank: 15, name: "akajosey", trophies: 9000},
+            {rank: 16, name: "luisdchildlover", trophies: 9000},
+            {rank: 17, name: "panchisz", trophies: 9000},
+            {rank: 18, name: "ColtonDABomb", trophies: 9000},
+            {rank: 19, name: "hammerofboom", trophies: 9000},
+            {rank: 20, name: "PEEPNUGGET", trophies: 9000}
+        ];
+
+        // Create particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 20 + 's';
+                particle.style.animationDuration = (20 + Math.random() * 10) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Open modal
+        function openModal(type) {
+            const modal = document.getElementById(type + 'Modal');
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            
+            if (type === 'info') {
+                loadMembers();
+            }
+            
+            // Animate sections
+            setTimeout(() => {
+                modal.querySelectorAll('.info-section, .discord-cta').forEach((el, index) => {
+                    el.style.animationDelay = (index * 0.2) + 's';
+                });
+            }, 100);
+        }
+
+        // Close modal
+        function closeModal(type) {
+            const modal = document.getElementById(type + 'Modal');
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Load members
+        function loadMembers() {
+            const memberList = document.getElementById('memberList');
+            memberList.innerHTML = topMembers.map(member => `
+                <div class="member-item">
+                    <span class="member-rank">#${member.rank}</span>
+                    <span class="member-name">${member.name}</span>
+                    <span class="member-trophies">🏆 ${member.trophies.toLocaleString()}</span>
+                </div>
+            `).join('');
+        }
+
+        // Close modal on outside click
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            createParticles();
+        });
+
+        // Touch support for mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', function(event) {
+            touchStartX = event.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', function(event) {
+            touchEndX = event.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) {
+                // Swiped left
+            }
+            if (touchEndX > touchStartX + 50) {
+                // Swiped right
+            }
+        }
+    </script>
+</body>
+</html>
